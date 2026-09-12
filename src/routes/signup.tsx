@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { AuthScreen } from "@/components/smaa/screens/auth-onboarding";
-export const Route=createFileRoute("/signup")({head:()=>({meta:[{title:"Create account — SMAA"},{name:"description",content:"Create your SMAA marketing workspace."},{property:"og:title",content:"Create account — SMAA"},{property:"og:description",content:"Create your SMAA marketing workspace."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:Page});
-function Page(){return <AuthScreen mode="signup"/>}
+import { createFileRoute, Navigate } from "@tanstack/react-router";
+// There is no signup endpoint and no user table — access is one shared workspace password.
+export const Route=createFileRoute("/signup")({head:()=>({meta:[{title:"Sign in — SMAA"},{name:"description",content:"Sign in to your SMAA marketing workspace."},{property:"og:title",content:"Sign in — SMAA"},{property:"og:description",content:"Sign in to your SMAA marketing workspace."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:Page});
+function Page(){return <Navigate to="/login"/>}

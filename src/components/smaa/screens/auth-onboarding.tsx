@@ -1,19 +1,56 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Check, LoaderCircle, Slack } from "lucide-react";
-import { useEffect, useState, type FormEvent } from "react";
+import { ArrowRight, LoaderCircle } from "lucide-react";
+import { type FormEvent } from "react";
 import { toast } from "sonner";
 import poster from "@/assets/smaa-poster.jpg";
 import { Button } from "@/components/ui/button";
-import { AgentActivity, ErrorState } from "@/components/smaa/system";
-import { authApi, integrationsApi, onboardingApi } from "@/lib/api/services";
+import { authApi } from "@/lib/api/services";
 
-export function AuthScreen({mode}:{mode:"login"|"signup"}){const navigate=useNavigate();const mutation=useMutation({mutationFn:(data:{fullName:string;email:string;password:string})=>mode==="login"?authApi.login(data):authApi.signup(data),onSuccess:(session)=>navigate({to:session.workspace?.onboardingComplete?"/dashboard":"/onboarding/brand"}),onError:(e:Error)=>toast.error(e.message)});const submit=(e:FormEvent<HTMLFormElement>)=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.currentTarget).entries()) as {fullName:string;email:string;password:string};mutation.mutate(data)};return <main className="auth-page"><section className="auth-art"><img src={poster} alt="SMAA campaign artwork" width={1200} height={1504}/><span className="brand-lockup"><span className="brand-symbol"><span/><span/></span>SMAA</span><p className="auth-quote">Brand intelligence, turned into work.</p></section><section className="auth-panel"><form className="auth-form" onSubmit={submit}><span className="brand-lockup"><span className="brand-symbol"><span/><span/></span>SMAA</span><h1>{mode==="login"?"Welcome back.":"Build a brand-aware AI marketing team."}</h1><p>{mode==="login"?"Sign in to continue to your workspace.":"Create your workspace and connect your brand context."}</p><div className="form-grid">{mode==="signup"?<label className="field"><span>Full name</span><input name="fullName" autoComplete="name" required/></label>:null}<label className="field"><span>Email</span><input type="email" name="email" autoComplete="email" required/></label><label className="field"><span>Password</span><input type="password" name="password" autoComplete={mode==="login"?"current-password":"new-password"} minLength={8} required/></label><Button type="submit" disabled={mutation.isPending}>{mutation.isPending?<LoaderCircle className="animate-spin"/>:null}{mode==="login"?"Sign in":"Create account"}<ArrowRight/></Button></div><p className="auth-switch">{mode==="login"?<>New to SMAA? <Link to="/signup">Create an account</Link></>:<>Already have an account? <Link to="/login">Sign in</Link></>}</p></form></section></main>}
-const steps=["Brand","Social","Slack","Knowledge","Ready"];
-function Frame({step,children}:{step:number;children:React.ReactNode}){return <main className="onboarding-page"><header className="onboarding-top"><Link to="/" className="brand-lockup"><span className="brand-symbol"><span/><span/></span>SMAA</Link><div className="progress-steps" aria-label={`Step ${step+1} of 5`}>{steps.map((x,i)=><span className="progress-step" data-complete={i<=step} key={x} title={x}/>)}</div></header><div className="onboarding-content">{children}</div></main>}
-export function BrandOnboarding(){const navigate=useNavigate();const mutation=useMutation({mutationFn:onboardingApi.brand,onSuccess:()=>navigate({to:"/onboarding/social"}),onError:(e:Error)=>toast.error(e.message)});return <Frame step={0}><p className="eyebrow">Brand · 1 of 5</p><h1>Tell SMAA about your brand</h1><p className="lead">We use your existing brand presence to build your AI workspace.</p><form className="panel onboarding-card form-grid" onSubmit={e=>{e.preventDefault();mutation.mutate(Object.fromEntries(new FormData(e.currentTarget).entries()))}}><div className="form-grid two"><Field label="Company name" name="companyName" required/><Field label="Website" name="website" type="url" required/><Field label="Industry" name="industry"/><Field label="Country" name="country"/></div><Field label="Description" name="description" textarea/><div className="onboarding-actions"><Button type="submit" disabled={mutation.isPending}>Continue<ArrowRight/></Button></div></form></Frame>}
-export function SocialOnboarding(){const navigate=useNavigate();const mutation=useMutation({mutationFn:onboardingApi.social,onSuccess:()=>navigate({to:"/onboarding/slack"}),onError:(e:Error)=>toast.error(e.message)});return <Frame step={1}><p className="eyebrow">Social · 2 of 5</p><h1>Connect your social presence</h1><p className="lead">Add the channels SMAA can learn from. Every field is optional.</p><form className="panel onboarding-card form-grid" onSubmit={e=>{e.preventDefault();mutation.mutate(Object.fromEntries(new FormData(e.currentTarget).entries()))}}><div className="form-grid two">{["Instagram","LinkedIn","TikTok","YouTube","Facebook","X / Twitter"].map(x=><Field key={x} label={x} name={x.toLowerCase().replaceAll(" ","-")} placeholder="Profile URL" type="url"/>)}</div><div className="onboarding-actions"><Button asChild variant="ghost"><Link to="/onboarding/slack">Skip for now</Link></Button><Button type="submit">Continue<ArrowRight/></Button></div></form></Frame>}
-export function SlackOnboarding(){const navigate=useNavigate();const mutation=useMutation({mutationFn:integrationsApi.connectSlack,onSuccess:(result)=>{if(result.url)window.location.assign(result.url);else navigate({to:"/onboarding/building"})},onError:(e:Error)=>toast.error(e.message)});return <Frame step={2}><p className="eyebrow">Slack · 3 of 5</p><h1>Bring SMAA into your team</h1><p className="lead">Connect Slack so your team can create, review, refine and approve content where they already work.</p><section className="panel onboarding-card"><span className="integration-icon"><Slack/></span><h2 className="mt-5 text-xl font-semibold">Slack</h2><div className="context-list">{["Create content from Slack","Review generated assets","Approve or reject as a team","Receive publishing updates"].map(x=><div className="context-item" key={x}><Check/>{x}</div>)}</div><div className="onboarding-actions"><Button asChild variant="ghost"><Link to="/onboarding/building">Skip for now</Link></Button><Button onClick={()=>mutation.mutate()} disabled={mutation.isPending}>Connect Slack</Button></div></section></Frame>}
-export function BuildingOnboarding(){const navigate=useNavigate();const q=useQuery({queryKey:["onboarding-status"],queryFn:onboardingApi.status,refetchInterval:3000,retry:false});useEffect(()=>{if(q.data?.stage==="ready")navigate({to:"/onboarding/complete"})},[q.data?.stage,navigate]);return <Frame step={3}><p className="eyebrow">Knowledge · 4 of 5</p><h1>Learning your brand</h1><p className="lead">SMAA is turning your existing online presence into a brand-aware AI workspace.</p>{q.isError?<ErrorState message={(q.error as Error).message} retry={()=>q.refetch()}/>:<AgentActivity events={q.data?.events} title="Brand knowledge"/>}</Frame>}
-export function CompleteOnboarding(){return <Frame step={4}><p className="eyebrow">Ready · 5 of 5</p><h1>Your SMAA workspace is ready.</h1><p className="lead">Your connected context is ready to support the team’s next piece of work.</p><section className="panel onboarding-card"><div className="context-list">{["Workspace created","Brand intelligence ready","Connected channels checked","Human review enabled"].map(x=><div className="context-item" key={x}><Check/>{x}</div>)}</div><div className="onboarding-actions"><Button asChild size="lg"><Link to="/dashboard">Enter workspace<ArrowRight/></Link></Button></div></section></Frame>}
-function Field({label,name,required,textarea,type="text",placeholder}:{label:string;name:string;required?:boolean;textarea?:boolean;type?:string;placeholder?:string}){return <label className={`field ${textarea?"field-wide":""}`}><span>{label}</span>{textarea?<textarea name={name} required={required} placeholder={placeholder}/>:<input name={name} type={type} required={required} placeholder={placeholder}/>}</label>}
+/**
+ * Access is a single shared workspace password — there is no user account, no email
+ * and no registration anywhere in the backend, so this screen asks for exactly one field.
+ * The login response is only {ok:true}, so session state is re-read from the session query.
+ */
+export function AuthScreen(){
+  const navigate=useNavigate();
+  const qc=useQueryClient();
+  const mutation=useMutation({
+    mutationFn:(data:{password:string})=>authApi.login(data),
+    onSuccess:async()=>{await qc.invalidateQueries({queryKey:["session"]});await navigate({to:"/dashboard"})},
+    onError:(e:Error)=>toast.error(e.message),
+  });
+  const submit=(e:FormEvent<HTMLFormElement>)=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.currentTarget).entries()) as {password:string};mutation.mutate(data)};
+  return <main className="auth-page">
+    <section className="auth-art"><img src={poster} alt="SMAA campaign artwork" width={1200} height={1504}/><span className="brand-lockup"><span className="brand-symbol"><span/><span/></span>SMAA</span><p className="auth-quote">Brand intelligence, turned into work.</p></section>
+    <section className="auth-panel"><form className="auth-form" onSubmit={submit}>
+      <span className="brand-lockup"><span className="brand-symbol"><span/><span/></span>SMAA</span>
+      <h1>Welcome back.</h1>
+      <p>Enter the workspace access password to continue.</p>
+      <div className="form-grid">
+        <label className="field"><span>Workspace password</span><input type="password" name="password" autoComplete="current-password" required/></label>
+        <Button type="submit" disabled={mutation.isPending}>{mutation.isPending?<LoaderCircle className="animate-spin"/>:null}Sign in<ArrowRight/></Button>
+      </div>
+      <p className="auth-switch">This workspace uses one shared access password. There are no individual accounts.</p>
+    </form></section>
+  </main>;
+}
+
+/**
+ * Onboarding has no backend in this build (no /api/onboarding/* route exists) and the
+ * workspace is already provisioned. Every /onboarding/* URL renders this instead of a
+ * form that cannot submit or a progress poll that can never resolve.
+ */
+export function OnboardingDisabled(){
+  return <main className="onboarding-page">
+    <header className="onboarding-top"><Link to="/dashboard" className="brand-lockup"><span className="brand-symbol"><span/><span/></span>SMAA</Link></header>
+    <div className="onboarding-content">
+      <p className="eyebrow">Workspace</p>
+      <h1>Your workspace is already set up.</h1>
+      <p className="lead">Guided onboarding is not part of this build. Brand knowledge is ingested outside the app, and the workspace is ready to create.</p>
+      <section className="panel onboarding-card">
+        <div className="onboarding-actions"><Button asChild size="lg"><Link to="/dashboard">Enter workspace<ArrowRight/></Link></Button></div>
+      </section>
+    </div>
+  </main>;
+}
