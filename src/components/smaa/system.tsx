@@ -13,7 +13,7 @@ export function StatusBadge({ status }: { status: AssetStatus }) {
   return <span data-status={status} className="status-badge"><span className="status-dot" aria-hidden="true" />{statusLabels[status]}</span>;
 }
 
-export function AgentActivity({ events, title = "SMAA Agent", compact = false }: { events?: AgentEvent[]; title?: string; compact?: boolean }) {
+export function AgentActivity({ events, title = "SMAA Agent", compact = false }: { events?: AgentEvent[] | undefined; title?: string; compact?: boolean }) {
   return (
     <section className={cn("agent-panel", compact && "agent-panel-compact")} aria-labelledby="agent-title">
       <div className="agent-heading"><span className="agent-mark"><Sparkles /></span><div><p className="eyebrow" id="agent-title">{title}</p><p className="agent-state">{events?.some((event) => event.status === "running") ? "Working" : "Activity"}</p></div></div>

@@ -2,7 +2,7 @@ import type { ApiErrorShape } from "@/types/smaa";
 
 export class ApiError extends Error {
   status: number;
-  code?: string;
+  code?: string | undefined;
   details?: unknown;
   constructor(error: ApiErrorShape) {
     super(error.message);
@@ -13,7 +13,7 @@ export class ApiError extends Error {
   }
 }
 
-const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "");
+const configuredBaseUrl = import.meta.env['VITE_API_BASE_URL']?.replace(/\/$/, "");
 export const apiConfigured = Boolean(configuredBaseUrl);
 
 export async function apiRequest<T>(path: string, init?: RequestInit): Promise<T> {
@@ -25,7 +25,7 @@ export async function apiRequest<T>(path: string, init?: RequestInit): Promise<T
     credentials: "include",
     headers: { "Content-Type": "application/json", Accept: "application/json", ...init?.headers },
   });
-  const payload = await response.json().catch(() => null) as { message?: string; code?: string; details?: unknown } | null;
+  const payload = await response.json().catch(() => null) as { message?: string; code?: string | undefined; details?: unknown } | null;
   if (!response.ok) {
     throw new ApiError({ status: response.status, message: payload?.message ?? "SMAA could not complete that request.", code: payload?.code, details: payload?.details });
   }

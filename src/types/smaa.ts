@@ -12,4 +12,4 @@ export interface BrandMemory { voice?: string[]; audience?: string[]; messaging?
 export interface Integration { id: string; name: string; status: "connected" | "not_connected" | "error" | "coming_later"; workspaceName?: string; detail?: string }
 export interface PublishingItem { id: string; asset: Asset; platform: string; caption?: string; scheduledAt?: string; liveUrl?: string; status: "ready" | "scheduled" | "published" | "failed"; error?: string }
 export interface Session { authenticated: boolean; workspace?: Workspace }
-export interface ApiErrorShape { message: string; status: number; code?: string; details?: unknown }
+export interface ApiErrorShape { message: string; status: number; code?: string | undefined; details?: unknown }
