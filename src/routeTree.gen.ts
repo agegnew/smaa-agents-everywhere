@@ -18,6 +18,7 @@ import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PublishingRouteImport } from './routes/publishing'
+import { Route as ReviewRouteImport } from './routes/review'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as CreateCharacterRouteImport } from './routes/create.character'
@@ -74,6 +75,11 @@ const LoginRoute = LoginRouteImport.update({
 const PublishingRoute = PublishingRouteImport.update({
   id: '/publishing',
   path: '/publishing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewRoute = ReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/library': typeof LibraryRouteWithChildren
   '/login': typeof LoginRoute
   '/publishing': typeof PublishingRouteWithChildren
+  '/review': typeof ReviewRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/create/character': typeof CreateCharacterRoute
@@ -170,6 +177,7 @@ export interface FileRoutesByTo {
   '/library': typeof LibraryRouteWithChildren
   '/login': typeof LoginRoute
   '/publishing': typeof PublishingRouteWithChildren
+  '/review': typeof ReviewRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/create/character': typeof CreateCharacterRoute
@@ -194,6 +202,7 @@ export interface FileRoutesById {
   '/library': typeof LibraryRouteWithChildren
   '/login': typeof LoginRoute
   '/publishing': typeof PublishingRouteWithChildren
+  '/review': typeof ReviewRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/create/character': typeof CreateCharacterRoute
@@ -219,6 +228,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/login'
     | '/publishing'
+    | '/review'
     | '/settings'
     | '/signup'
     | '/create/character'
@@ -242,6 +252,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/login'
     | '/publishing'
+    | '/review'
     | '/settings'
     | '/signup'
     | '/create/character'
@@ -265,6 +276,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/login'
     | '/publishing'
+    | '/review'
     | '/settings'
     | '/signup'
     | '/create/character'
@@ -289,6 +301,7 @@ export interface RootRouteChildren {
   LibraryRoute: typeof LibraryRouteWithChildren
   LoginRoute: typeof LoginRoute
   PublishingRoute: typeof PublishingRouteWithChildren
+  ReviewRoute: typeof ReviewRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   OnboardingBrandRoute: typeof OnboardingBrandRoute
@@ -361,6 +374,13 @@ declare module '@tanstack/react-router' {
       path: '/publishing'
       fullPath: '/publishing'
       preLoaderRoute: typeof PublishingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review': {
+      id: '/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof ReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -498,6 +518,7 @@ const rootRouteChildren: RootRouteChildren = {
   LibraryRoute: LibraryRouteWithChildren,
   LoginRoute: LoginRoute,
   PublishingRoute: PublishingRouteWithChildren,
+  ReviewRoute: ReviewRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   OnboardingBrandRoute: OnboardingBrandRoute,
