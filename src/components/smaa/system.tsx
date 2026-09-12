@@ -2,6 +2,7 @@ import { AlertCircle, Check, Circle, LoaderCircle, RefreshCw, Sparkles } from "l
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import type { ReactNode } from "react";
 import type { AgentEvent, AssetStatus } from "@/types/smaa";
 
 const statusLabels: Record<AssetStatus, string> = {
@@ -34,10 +35,10 @@ export function ErrorState({ title = "We couldn’t load this page", message = "
   return <div className="state-panel"><span className="state-icon"><AlertCircle /></span><h2>{title}</h2><p>{message}</p>{retry ? <Button variant="outline" onClick={retry}><RefreshCw/>Retry</Button> : null}</div>;
 }
 
-export function EmptyState({ title, message, action }: { title: string; message: string; action?: React.ReactNode }) {
+export function EmptyState({ title, message, action }: { title: string; message: string; action?: ReactNode }) {
   return <div className="state-panel state-panel-empty"><span className="state-icon"><Sparkles /></span><h2>{title}</h2><p>{message}</p>{action}</div>;
 }
 
-export function PageHeader({ eyebrow, title, description, action }: { eyebrow?: string; title: string; description?: string; action?: React.ReactNode }) {
+export function PageHeader({ eyebrow, title, description, action }: { eyebrow?: string; title: string; description?: string; action?: ReactNode }) {
   return <header className="page-header"><div>{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}<h1>{title}</h1>{description ? <p>{description}</p> : null}</div>{action}</header>;
 }
