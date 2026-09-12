@@ -1,0 +1,5 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PageHeader, EmptyState } from "@/components/smaa/system";
+import { Button } from "@/components/ui/button";
+export const Route=createFileRoute("/publishing/$assetId")({head:()=>({meta:[{title:"Publish Asset — SMAA"},{name:"description",content:"Confirm destination, caption and timing for a SMAA asset."},{property:"og:title",content:"Publish Asset — SMAA"},{property:"og:description",content:"Move approved creative work toward publishing."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:Page});
+function Page(){const {assetId}=Route.useParams();return <div className="page-wrap"><PageHeader eyebrow="Publishing" title="Prepare this asset" description="Publishing controls become available when the backend returns an approved destination and account."/><EmptyState title="Publishing details unavailable" message={`No publishing record is available for asset ${assetId}.`} action={<Button asChild variant="outline"><Link to="/publishing">Back to publishing</Link></Button>}/></div>}
