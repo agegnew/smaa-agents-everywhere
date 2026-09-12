@@ -5,8 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --radius-sm: calc(var(--radius) - 3px); --radius-md: calc(var(--radius) - 1px); --radius-lg: var(--radius); --radius-xl: calc(var(--radius) + 3px);
   --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--card); --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover); --color-popover-foreground: var(--popover-foreground); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground);
@@ -18,14 +19,22 @@
 }
 
 :root {
+  /* Palette ported from the 42-studio frontend (tailwind.config.ts): white
+     surfaces, near-black text, teal accent. Mapped onto SMAA's existing token
+     names so every component restyles without touching a single component. */
   --radius: .5rem;
-  --background: oklch(.975 .008 92); --foreground: oklch(.19 .018 155); --card: oklch(.997 .003 92); --card-foreground: oklch(.19 .018 155);
-  --popover: oklch(.997 .003 92); --popover-foreground: oklch(.19 .018 155); --primary: oklch(.31 .07 157); --primary-foreground: oklch(.98 .007 95);
-  --secondary: oklch(.94 .013 90); --secondary-foreground: oklch(.25 .025 155); --muted: oklch(.944 .01 92); --muted-foreground: oklch(.5 .02 155);
-  --accent: oklch(.91 .026 145); --accent-foreground: oklch(.25 .05 157); --destructive: oklch(.57 .18 28); --destructive-foreground: oklch(.98 .005 95);
-  --border: oklch(.875 .014 91); --input: oklch(.88 .014 91); --ring: oklch(.48 .09 157);
-  --success: oklch(.45 .11 154); --success-muted: oklch(.93 .035 151); --warning: oklch(.62 .12 72); --warning-muted: oklch(.95 .035 78); --coral: oklch(.65 .18 31); --ink: oklch(.15 .018 155);
-  --sidebar: oklch(.955 .014 95); --sidebar-foreground: oklch(.23 .022 155); --sidebar-primary: oklch(.31 .07 157); --sidebar-primary-foreground: oklch(.98 .007 95); --sidebar-accent: oklch(.91 .025 145); --sidebar-accent-foreground: oklch(.24 .05 157); --sidebar-border: oklch(.86 .016 91); --sidebar-ring: oklch(.48 .09 157);
+  --background: #FFFFFF; --foreground: #0F1011; --card: #FFFFFF; --card-foreground: #0F1011;
+  --popover: #FFFFFF; --popover-foreground: #0F1011;
+  /* .btn-primary there is `bg-fg text-white` — a near-black button, not a tinted one. */
+  --primary: #0F1011; --primary-foreground: #FFFFFF;
+  --secondary: #F2F2F4; --secondary-foreground: #0F1011; --muted: #F2F2F4; --muted-foreground: #71717A;
+  --accent: #06B6A2; --accent-foreground: #FFFFFF; --destructive: #EF4444; --destructive-foreground: #FFFFFF;
+  --border: #E5E5E7; --input: #E5E5E7; --ring: #06B6A2;
+  --success: #10B981; --success-muted: rgba(6,182,162,.10); --warning: #F59E0B; --warning-muted: rgba(245,158,11,.12);
+  /* `coral` drives running/in-progress states; upstream uses the teal accent for those. */
+  --coral: #06B6A2; --ink: #0F1011;
+  --sidebar: #FAFAF9; --sidebar-foreground: #0F1011; --sidebar-primary: #0F1011; --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F2F2F4; --sidebar-accent-foreground: #0F1011; --sidebar-border: #E5E5E7; --sidebar-ring: #06B6A2;
 }
 
 * { border-color: var(--border); }
@@ -40,8 +49,8 @@ button, a, input, textarea, select { outline-color: var(--ring); }
 .brand-lockup { display:flex; align-items:center; gap:.7rem; min-height:2.5rem; padding:.15rem .35rem; font:700 1.05rem var(--font-display); }
 .brand-symbol { position:relative; width:1.65rem; height:1.65rem; border-radius:.4rem; background:var(--ink); display:inline-block; flex:none; }.brand-symbol span { position:absolute; width:.42rem; height:.42rem; border-radius:50%; }.brand-symbol span:first-child{background:var(--coral);top:.42rem;left:.42rem}.brand-symbol span:last-child{background:var(--success-muted);bottom:.42rem;right:.42rem}
 .workspace-switcher { margin-top:.75rem; display:grid; grid-template-columns:2rem 1fr 1rem; width:100%; align-items:center; gap:.55rem; padding:.55rem; border:1px solid var(--sidebar-border); border-radius:var(--radius); text-align:left; background:var(--card); cursor:pointer; }.workspace-switcher strong,.workspace-switcher small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.workspace-switcher strong{font-size:.75rem}.workspace-switcher small{font-size:.625rem;color:var(--muted-foreground);margin-top:.1rem}.workspace-avatar{width:2rem;height:2rem;display:grid;place-items:center;border-radius:.35rem;background:var(--primary);color:var(--primary-foreground);font-weight:700;font-size:.7rem}
-.page-wrap{max-width:90rem;margin:0 auto}.page-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:2rem}.page-header h1{font:650 clamp(2rem,4vw,3.5rem)/1 var(--font-display);letter-spacing:0;margin:.35rem 0 0}.page-header>div>p:last-child{max-width:42rem;margin:.8rem 0 0;color:var(--muted-foreground);font-size:.95rem}.eyebrow{text-transform:uppercase;font-size:.65rem;font-weight:750;letter-spacing:.12em;color:var(--muted-foreground)}
-.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:0 1px 2px color-mix(in oklab,var(--ink) 5%,transparent)}
+.page-wrap{max-width:90rem;margin:0 auto}.page-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:2rem}.page-header h1{font:650 clamp(2rem,4vw,3.5rem)/1 var(--font-display);letter-spacing:0;margin:.35rem 0 0}.page-header>div>p:last-child{max-width:42rem;margin:.8rem 0 0;color:var(--muted-foreground);font-size:.95rem}.eyebrow{text-transform:uppercase;font-family:var(--font-mono);font-size:.6875rem;font-weight:500;letter-spacing:.16em;color:var(--muted-foreground)}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:0 1px 2px rgba(24,24,27,.04),0 0 0 1px rgba(24,24,27,.04)}
 .command-hero{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(19rem,.65fr);gap:1rem;margin-bottom:2.5rem}.command-composer{padding:clamp(1.5rem,4vw,3rem);background:var(--ink);color:var(--primary-foreground);min-height:23rem;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}.command-composer:after{content:"";position:absolute;width:11rem;height:11rem;border:1px solid color-mix(in oklab,var(--primary-foreground) 15%,transparent);border-radius:50%;right:-4rem;top:-4rem}.command-composer h1{font:600 clamp(2.5rem,5vw,4.7rem)/.98 var(--font-display);max-width:12ch;margin:.5rem 0}.command-composer>p{color:color-mix(in oklab,var(--primary-foreground) 65%,transparent)}.composer-box{position:relative;z-index:1;background:var(--card);color:var(--foreground);padding:.6rem;border-radius:var(--radius);display:flex;gap:.75rem;align-items:flex-end}.composer-box textarea{resize:none;border:0;background:transparent;min-height:4.5rem;flex:1;padding:.7rem;font:500 1rem var(--font-sans);outline:0}.composer-box button{height:2.8rem}
 .agent-panel{padding:1.4rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg)}.command-hero .agent-panel{height:100%}.agent-heading{display:flex;gap:.75rem;align-items:center;padding-bottom:1.1rem;border-bottom:1px solid var(--border)}.agent-mark{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--success-muted);color:var(--success)}.agent-mark svg{width:1rem}.agent-state{font-size:.85rem;font-weight:650;margin:.2rem 0 0}.agent-events{list-style:none;padding:1rem 0 0;margin:0;display:grid;gap:.85rem}.agent-event{display:grid;grid-template-columns:1.25rem 1fr auto;align-items:center;gap:.5rem;font-size:.82rem}.agent-event time{font-size:.7rem;color:var(--muted-foreground)}.event-icon{width:1.15rem;height:1.15rem;display:grid;place-items:center;border-radius:50%;color:var(--muted-foreground)}.event-icon svg{width:.85rem;height:.85rem}.agent-event[data-status=complete] .event-icon{background:var(--success-muted);color:var(--success)}.agent-event[data-status=running] .event-icon{color:var(--coral)}.agent-event[data-status=error] .event-icon{color:var(--destructive)}.empty-copy{color:var(--muted-foreground);font-size:.82rem;margin:1.25rem 0}
 .section-heading{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin:2.5rem 0 1rem}.section-heading h2{font:600 1.35rem var(--font-display);margin:0}.section-heading p{color:var(--muted-foreground);font-size:.82rem;margin:.25rem 0 0}.create-grid,.asset-grid,.integration-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.create-card{position:relative;min-height:24rem;overflow:hidden;border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--ink);color:var(--primary-foreground)}.create-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}.create-card:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(to bottom,transparent,var(--ink))}.create-card:hover img{transform:scale(1.025)}.create-card-content{position:absolute;z-index:1;inset:auto 0 0;padding:1.35rem}.create-card h3{font:600 1.35rem var(--font-display);margin:.4rem 0}.create-card p{font-size:.8rem;line-height:1.5;color:color-mix(in oklab,var(--primary-foreground) 75%,transparent);margin:0}.create-card .arrow{position:absolute;right:1.25rem;bottom:1.25rem;width:2.5rem;height:2.5rem;display:grid;place-items:center;border-radius:50%;background:var(--primary-foreground);color:var(--ink)}
@@ -58,3 +67,55 @@ button, a, input, textarea, select { outline-color: var(--ring); }
 @media(max-width:1024px){.command-hero,.form-shell,.detail-layout,.assistant-layout{grid-template-columns:1fr}.command-hero .agent-panel,.context-panel{position:static}.asset-stage{min-height:60svh}.create-grid,.asset-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.integration-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.app-main{padding:1rem}.page-header{align-items:flex-start;flex-direction:column;margin-bottom:1.5rem}.command-composer{min-height:26rem}.composer-box{flex-direction:column;align-items:stretch}.create-grid,.asset-grid,.integration-grid{grid-template-columns:1fr}.create-card{min-height:28rem}.form-grid.two{grid-template-columns:1fr}.field-wide{grid-column:auto}.auth-page{grid-template-columns:1fr;background:var(--background)}.auth-art{display:none}.auth-panel{min-height:100svh;padding:1.25rem}.progress-step{width:1.7rem}.onboarding-content{margin-top:4rem}.toolbar{flex-direction:column}.review-actions{position:sticky;bottom:.75rem;background:var(--card);padding:.65rem;border:1px solid var(--border);border-radius:var(--radius);z-index:10}.review-actions button{flex:1}.review-actions button:last-child{margin-left:0}.settings-row{grid-template-columns:1fr auto}.settings-row p{grid-column:1/-1;grid-row:2}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
+/* ---------------------------------------------------------------------------
+   Shell ported from the 42-studio frontend (Sidebar.tsx / Layout.tsx).
+   Written as literal CSS rather than @apply: that project is Tailwind v3 and
+   its colour names (bg-subtle, fg, accent) do not exist in this v4 theme.
+   --------------------------------------------------------------------------- */
+.studio-sidebar{position:fixed;inset-block:0;left:0;z-index:40;width:240px;display:none;flex-direction:column;border-right:1px solid var(--border);background:#FAFAF9}
+@media(min-width:1024px){.studio-sidebar{display:flex}}
+.studio-brand{display:flex;align-items:center;gap:.625rem;padding:1.25rem;border-bottom:1px solid var(--border);text-align:left;background:none;border-inline:0;border-top:0;cursor:pointer;width:100%}
+.studio-mark{display:inline-flex;width:1.75rem;height:1.75rem;flex:none;align-items:center;justify-content:center;border-radius:.25rem;background:var(--foreground);color:#fff;font-size:11px;font-weight:700;line-height:1;transition:box-shadow .2s}
+.studio-brand:hover .studio-mark{box-shadow:0 0 0 6px rgba(6,182,162,.10)}
+.studio-brand-text{min-width:0;line-height:1.15}
+.studio-brand-title{display:block;font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--foreground);transition:color .15s}
+.studio-brand:hover .studio-brand-title{color:var(--accent)}
+.studio-brand-sub{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:600;letter-spacing:.02em;color:color-mix(in srgb,var(--foreground) 70%,transparent);margin-top:.125rem}
+.studio-nav{flex:1;padding:1.25rem .75rem;display:grid;gap:.25rem;align-content:start;overflow-y:auto}
+.nav-item{position:relative;display:flex;align-items:center;gap:.75rem;padding:.5rem .75rem;border-radius:.25rem;font-size:.875rem;font-weight:500;color:var(--muted-foreground);background:none;border:0;width:100%;text-align:left;cursor:pointer;transition:color .15s,background-color .15s}
+.nav-item:hover{color:var(--foreground);background:var(--muted)}
+.nav-item.active{color:var(--foreground);background:var(--muted)}
+.nav-item.active::before{content:"";position:absolute;left:0;top:.375rem;bottom:.375rem;width:3px;border-radius:0 .25rem .25rem 0;background:var(--accent)}
+.nav-icon{width:1.05rem;height:1.05rem;flex:none}
+.pill{display:inline-block;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.16em;font-size:10px;font-weight:700;padding:.25rem .5rem;border-radius:.25rem;margin-left:auto;background:rgba(6,182,162,.10);color:var(--accent);border:1px solid rgba(6,182,162,.20)}
+.studio-main{outline:none}
+@media(min-width:1024px){.studio-main{padding-left:240px}}
+.studio-page{max-width:80rem;margin:0 auto;padding:2rem 1.5rem}
+@media(min-width:768px){.studio-page{padding:2rem 2.5rem}}
+
+/* Create hub — rebuilt on 42-studio's `.card` (bg-bg-subtle, border-border,
+   rounded-xl, shadow-soft) plus `.card-hover` (border-strong, shadow-lift,
+   -translate-y-px). Replaces the dark full-bleed image cards, which were the
+   loudest thing left that did not belong in a white, bordered design. */
+.create-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.create-card{position:relative;min-height:0;display:flex;flex-direction:column;overflow:hidden;
+  background:#fff;border:1px solid var(--border);border-radius:.75rem;color:var(--foreground);
+  box-shadow:0 1px 2px rgba(24,24,27,.04),0 0 0 1px rgba(24,24,27,.04);
+  transition:border-color .15s,box-shadow .15s,transform .15s}
+.create-card:hover{border-color:#D4D4D8;transform:translateY(-1px);
+  box-shadow:0 10px 30px -10px rgba(24,24,27,.10),0 4px 8px -4px rgba(24,24,27,.06)}
+.create-card img{position:static;width:100%;height:9.5rem;object-fit:cover;flex:none;
+  border-bottom:1px solid var(--border);transition:none}
+.create-card:hover img{transform:none}
+.create-card:after{content:none}
+.create-card-content{position:static;inset:auto;padding:1.1rem 1.15rem 3.1rem}
+.create-card h3{font:600 1.05rem var(--font-display);letter-spacing:-.01em;margin:.35rem 0 .3rem;color:var(--foreground)}
+.create-card p{font-size:.8125rem;line-height:1.5;color:var(--muted-foreground);margin:0}
+.create-card .arrow{position:absolute;right:1.15rem;bottom:1.15rem;width:1.85rem;height:1.85rem;
+  display:grid;place-items:center;border-radius:.25rem;background:var(--muted);color:var(--foreground);
+  transition:background-color .15s,color .15s}
+.create-card .arrow svg{width:.9rem;height:.9rem}
+.create-card:hover .arrow{background:var(--accent);color:#fff}
+@media(max-width:1024px){.create-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.create-grid{grid-template-columns:1fr}.create-card img{height:11rem}}

@@ -11,5 +11,6 @@ export interface BrandSource { id: string; name: string; connected: boolean; cou
 export interface BrandMemory { voice?: string[]; audience?: string[]; messaging?: string[]; visualIdentity?: string[]; sources?: BrandSource[] }
 export interface Integration { id: string; name: string; status: "connected" | "not_connected" | "error" | "coming_later"; workspaceName?: string; detail?: string }
 export interface PublishingItem { id: string; asset: Asset; platform: string; caption?: string; scheduledAt?: string; liveUrl?: string; status: "ready" | "scheduled" | "published" | "failed"; error?: string }
-export interface Session { authenticated: boolean; workspace?: Workspace }
+export interface SmaaUser { id: number; email: string; fullName: string }
+export interface Session { authenticated: boolean; user?: SmaaUser; workspace?: Workspace }
 export interface ApiErrorShape { message: string; status: number; code?: string | undefined; details?: unknown }

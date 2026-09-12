@@ -9,13 +9,12 @@ const body = (value: unknown) => ({ method: "POST", body: JSON.stringify(value) 
 const withMedia = (asset: Asset): Asset => (asset?.imageUrl ? { ...asset, imageUrl: resolveMediaUrl(asset.imageUrl) } : asset);
 
 export const authApi = {
-  // /api/auth/me does not exist. The adapter derives real access state (access.enabled() +
-  // token_ok(), the logic behind GET /api/auth/status) and adds the workspace object.
   me: () => apiRequest<Session>("/api/smaa/session"),
-  // Real route, real model: LoginBody has exactly one field. Returns {ok}, not a Session —
-  // refetch the session query after a success.
-  login: (data: { password: string }) => apiRequest<{ ok: boolean }>("/api/auth/login", body(data)),
-  logout: () => apiRequest<void>("/api/auth/logout", body({})),
+  login: (data: { email: string; password: string }) =>
+    apiRequest<Session>("/api/smaa/auth/login", body(data)),
+  signup: (data: { fullName: string; email: string; password: string }) =>
+    apiRequest<Session>("/api/smaa/auth/signup", body(data)),
+  logout: () => apiRequest<void>("/api/smaa/auth/logout", body({})),
 };
 
 export const workspaceApi = { get: () => apiRequest<Workspace>("/api/smaa/workspace") };
