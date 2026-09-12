@@ -2,11 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Navigate, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { authApi } from "@/lib/api/services";
-import { ApiError } from "@/lib/api/client";
+import { ApiError, apiConfigured } from "@/lib/api/client";
 import { ErrorState, LoadingState } from "@/components/smaa/system";
 
 export function AccessGate({ children, onboarding = false }: { children: ReactNode; onboarding?: boolean }) {
   const path = useRouterState({ select: (state) => state.location.pathname });
+  if (!apiConfigured) return children;
   const session = useQuery({ queryKey: ["session"], queryFn: authApi.me, retry: false });
   if (session.isLoading) return <LoadingState label="Loading workspace context" />;
   if (session.isError) {
