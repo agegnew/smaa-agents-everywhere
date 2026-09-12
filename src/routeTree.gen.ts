@@ -10,33 +10,292 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AssistantRouteImport } from './routes/assistant'
+import { Route as BrandRouteImport } from './routes/brand'
+import { Route as CreateRouteImport } from './routes/create'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
+import { Route as LibraryRouteImport } from './routes/library'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PublishingRouteImport } from './routes/publishing'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as CreateCharacterRouteImport } from './routes/create.character'
+import { Route as CreatePosterRouteImport } from './routes/create.poster'
+import { Route as CreatePosterHumanRouteImport } from './routes/create.poster-human'
+import { Route as LibraryAssetIdRouteImport } from './routes/library.$assetId'
+import { Route as OnboardingBrandRouteImport } from './routes/onboarding.brand'
+import { Route as OnboardingBuildingRouteImport } from './routes/onboarding.building'
+import { Route as OnboardingCompleteRouteImport } from './routes/onboarding.complete'
+import { Route as OnboardingSlackRouteImport } from './routes/onboarding.slack'
+import { Route as OnboardingSocialRouteImport } from './routes/onboarding.social'
+import { Route as PublishingAssetIdRouteImport } from './routes/publishing.$assetId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandRoute = BrandRouteImport.update({
+  id: '/brand',
+  path: '/brand',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateRoute = CreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublishingRoute = PublishingRouteImport.update({
+  id: '/publishing',
+  path: '/publishing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateCharacterRoute = CreateCharacterRouteImport.update({
+  id: '/character',
+  path: '/character',
+  getParentRoute: () => CreateRoute,
+} as any)
+const CreatePosterRoute = CreatePosterRouteImport.update({
+  id: '/poster',
+  path: '/poster',
+  getParentRoute: () => CreateRoute,
+} as any)
+const CreatePosterHumanRoute = CreatePosterHumanRouteImport.update({
+  id: '/poster-human',
+  path: '/poster-human',
+  getParentRoute: () => CreateRoute,
+} as any)
+const LibraryAssetIdRoute = LibraryAssetIdRouteImport.update({
+  id: '/$assetId',
+  path: '/$assetId',
+  getParentRoute: () => LibraryRoute,
+} as any)
+const OnboardingBrandRoute = OnboardingBrandRouteImport.update({
+  id: '/onboarding/brand',
+  path: '/onboarding/brand',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingBuildingRoute = OnboardingBuildingRouteImport.update({
+  id: '/onboarding/building',
+  path: '/onboarding/building',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingCompleteRoute = OnboardingCompleteRouteImport.update({
+  id: '/onboarding/complete',
+  path: '/onboarding/complete',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingSlackRoute = OnboardingSlackRouteImport.update({
+  id: '/onboarding/slack',
+  path: '/onboarding/slack',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingSocialRoute = OnboardingSocialRouteImport.update({
+  id: '/onboarding/social',
+  path: '/onboarding/social',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublishingAssetIdRoute = PublishingAssetIdRouteImport.update({
+  id: '/$assetId',
+  path: '/$assetId',
+  getParentRoute: () => PublishingRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
+  '/brand': typeof BrandRoute
+  '/create': typeof CreateRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/integrations': typeof IntegrationsRoute
+  '/library': typeof LibraryRouteWithChildren
+  '/login': typeof LoginRoute
+  '/publishing': typeof PublishingRouteWithChildren
+  '/settings': typeof SettingsRoute
+  '/signup': typeof SignupRoute
+  '/create/character': typeof CreateCharacterRoute
+  '/create/poster': typeof CreatePosterRoute
+  '/create/poster-human': typeof CreatePosterHumanRoute
+  '/library/$assetId': typeof LibraryAssetIdRoute
+  '/onboarding/brand': typeof OnboardingBrandRoute
+  '/onboarding/building': typeof OnboardingBuildingRoute
+  '/onboarding/complete': typeof OnboardingCompleteRoute
+  '/onboarding/slack': typeof OnboardingSlackRoute
+  '/onboarding/social': typeof OnboardingSocialRoute
+  '/publishing/$assetId': typeof PublishingAssetIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
+  '/brand': typeof BrandRoute
+  '/create': typeof CreateRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/integrations': typeof IntegrationsRoute
+  '/library': typeof LibraryRouteWithChildren
+  '/login': typeof LoginRoute
+  '/publishing': typeof PublishingRouteWithChildren
+  '/settings': typeof SettingsRoute
+  '/signup': typeof SignupRoute
+  '/create/character': typeof CreateCharacterRoute
+  '/create/poster': typeof CreatePosterRoute
+  '/create/poster-human': typeof CreatePosterHumanRoute
+  '/library/$assetId': typeof LibraryAssetIdRoute
+  '/onboarding/brand': typeof OnboardingBrandRoute
+  '/onboarding/building': typeof OnboardingBuildingRoute
+  '/onboarding/complete': typeof OnboardingCompleteRoute
+  '/onboarding/slack': typeof OnboardingSlackRoute
+  '/onboarding/social': typeof OnboardingSocialRoute
+  '/publishing/$assetId': typeof PublishingAssetIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
+  '/brand': typeof BrandRoute
+  '/create': typeof CreateRouteWithChildren
+  '/dashboard': typeof DashboardRoute
+  '/integrations': typeof IntegrationsRoute
+  '/library': typeof LibraryRouteWithChildren
+  '/login': typeof LoginRoute
+  '/publishing': typeof PublishingRouteWithChildren
+  '/settings': typeof SettingsRoute
+  '/signup': typeof SignupRoute
+  '/create/character': typeof CreateCharacterRoute
+  '/create/poster': typeof CreatePosterRoute
+  '/create/poster-human': typeof CreatePosterHumanRoute
+  '/library/$assetId': typeof LibraryAssetIdRoute
+  '/onboarding/brand': typeof OnboardingBrandRoute
+  '/onboarding/building': typeof OnboardingBuildingRoute
+  '/onboarding/complete': typeof OnboardingCompleteRoute
+  '/onboarding/slack': typeof OnboardingSlackRoute
+  '/onboarding/social': typeof OnboardingSocialRoute
+  '/publishing/$assetId': typeof PublishingAssetIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/assistant'
+    | '/brand'
+    | '/create'
+    | '/dashboard'
+    | '/integrations'
+    | '/library'
+    | '/login'
+    | '/publishing'
+    | '/settings'
+    | '/signup'
+    | '/create/character'
+    | '/create/poster'
+    | '/create/poster-human'
+    | '/library/$assetId'
+    | '/onboarding/brand'
+    | '/onboarding/building'
+    | '/onboarding/complete'
+    | '/onboarding/slack'
+    | '/onboarding/social'
+    | '/publishing/$assetId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/assistant'
+    | '/brand'
+    | '/create'
+    | '/dashboard'
+    | '/integrations'
+    | '/library'
+    | '/login'
+    | '/publishing'
+    | '/settings'
+    | '/signup'
+    | '/create/character'
+    | '/create/poster'
+    | '/create/poster-human'
+    | '/library/$assetId'
+    | '/onboarding/brand'
+    | '/onboarding/building'
+    | '/onboarding/complete'
+    | '/onboarding/slack'
+    | '/onboarding/social'
+    | '/publishing/$assetId'
+  id:
+    | '__root__'
+    | '/'
+    | '/assistant'
+    | '/brand'
+    | '/create'
+    | '/dashboard'
+    | '/integrations'
+    | '/library'
+    | '/login'
+    | '/publishing'
+    | '/settings'
+    | '/signup'
+    | '/create/character'
+    | '/create/poster'
+    | '/create/poster-human'
+    | '/library/$assetId'
+    | '/onboarding/brand'
+    | '/onboarding/building'
+    | '/onboarding/complete'
+    | '/onboarding/slack'
+    | '/onboarding/social'
+    | '/publishing/$assetId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssistantRoute: typeof AssistantRoute
+  BrandRoute: typeof BrandRoute
+  CreateRoute: typeof CreateRouteWithChildren
+  DashboardRoute: typeof DashboardRoute
+  IntegrationsRoute: typeof IntegrationsRoute
+  LibraryRoute: typeof LibraryRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  PublishingRoute: typeof PublishingRouteWithChildren
+  SettingsRoute: typeof SettingsRoute
+  SignupRoute: typeof SignupRoute
+  OnboardingBrandRoute: typeof OnboardingBrandRoute
+  OnboardingBuildingRoute: typeof OnboardingBuildingRoute
+  OnboardingCompleteRoute: typeof OnboardingCompleteRoute
+  OnboardingSlackRoute: typeof OnboardingSlackRoute
+  OnboardingSocialRoute: typeof OnboardingSocialRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +307,204 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brand': {
+      id: '/brand'
+      path: '/brand'
+      fullPath: '/brand'
+      preLoaderRoute: typeof BrandRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/publishing': {
+      id: '/publishing'
+      path: '/publishing'
+      fullPath: '/publishing'
+      preLoaderRoute: typeof PublishingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create/character': {
+      id: '/create/character'
+      path: '/character'
+      fullPath: '/create/character'
+      preLoaderRoute: typeof CreateCharacterRouteImport
+      parentRoute: typeof CreateRoute
+    }
+    '/create/poster': {
+      id: '/create/poster'
+      path: '/poster'
+      fullPath: '/create/poster'
+      preLoaderRoute: typeof CreatePosterRouteImport
+      parentRoute: typeof CreateRoute
+    }
+    '/create/poster-human': {
+      id: '/create/poster-human'
+      path: '/poster-human'
+      fullPath: '/create/poster-human'
+      preLoaderRoute: typeof CreatePosterHumanRouteImport
+      parentRoute: typeof CreateRoute
+    }
+    '/library/$assetId': {
+      id: '/library/$assetId'
+      path: '/$assetId'
+      fullPath: '/library/$assetId'
+      preLoaderRoute: typeof LibraryAssetIdRouteImport
+      parentRoute: typeof LibraryRoute
+    }
+    '/onboarding/brand': {
+      id: '/onboarding/brand'
+      path: '/onboarding/brand'
+      fullPath: '/onboarding/brand'
+      preLoaderRoute: typeof OnboardingBrandRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/building': {
+      id: '/onboarding/building'
+      path: '/onboarding/building'
+      fullPath: '/onboarding/building'
+      preLoaderRoute: typeof OnboardingBuildingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/complete': {
+      id: '/onboarding/complete'
+      path: '/onboarding/complete'
+      fullPath: '/onboarding/complete'
+      preLoaderRoute: typeof OnboardingCompleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/slack': {
+      id: '/onboarding/slack'
+      path: '/onboarding/slack'
+      fullPath: '/onboarding/slack'
+      preLoaderRoute: typeof OnboardingSlackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/social': {
+      id: '/onboarding/social'
+      path: '/onboarding/social'
+      fullPath: '/onboarding/social'
+      preLoaderRoute: typeof OnboardingSocialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/publishing/$assetId': {
+      id: '/publishing/$assetId'
+      path: '/$assetId'
+      fullPath: '/publishing/$assetId'
+      preLoaderRoute: typeof PublishingAssetIdRouteImport
+      parentRoute: typeof PublishingRoute
+    }
   }
 }
 
+interface CreateRouteChildren {
+  CreateCharacterRoute: typeof CreateCharacterRoute
+  CreatePosterRoute: typeof CreatePosterRoute
+  CreatePosterHumanRoute: typeof CreatePosterHumanRoute
+}
+
+const CreateRouteChildren: CreateRouteChildren = {
+  CreateCharacterRoute: CreateCharacterRoute,
+  CreatePosterRoute: CreatePosterRoute,
+  CreatePosterHumanRoute: CreatePosterHumanRoute,
+}
+
+const CreateRouteWithChildren =
+  CreateRoute._addFileChildren(CreateRouteChildren)
+
+interface LibraryRouteChildren {
+  LibraryAssetIdRoute: typeof LibraryAssetIdRoute
+}
+
+const LibraryRouteChildren: LibraryRouteChildren = {
+  LibraryAssetIdRoute: LibraryAssetIdRoute,
+}
+
+const LibraryRouteWithChildren =
+  LibraryRoute._addFileChildren(LibraryRouteChildren)
+
+interface PublishingRouteChildren {
+  PublishingAssetIdRoute: typeof PublishingAssetIdRoute
+}
+
+const PublishingRouteChildren: PublishingRouteChildren = {
+  PublishingAssetIdRoute: PublishingAssetIdRoute,
+}
+
+const PublishingRouteWithChildren = PublishingRoute._addFileChildren(
+  PublishingRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssistantRoute: AssistantRoute,
+  BrandRoute: BrandRoute,
+  CreateRoute: CreateRouteWithChildren,
+  DashboardRoute: DashboardRoute,
+  IntegrationsRoute: IntegrationsRoute,
+  LibraryRoute: LibraryRouteWithChildren,
+  LoginRoute: LoginRoute,
+  PublishingRoute: PublishingRouteWithChildren,
+  SettingsRoute: SettingsRoute,
+  SignupRoute: SignupRoute,
+  OnboardingBrandRoute: OnboardingBrandRoute,
+  OnboardingBuildingRoute: OnboardingBuildingRoute,
+  OnboardingCompleteRoute: OnboardingCompleteRoute,
+  OnboardingSlackRoute: OnboardingSlackRoute,
+  OnboardingSocialRoute: OnboardingSocialRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
