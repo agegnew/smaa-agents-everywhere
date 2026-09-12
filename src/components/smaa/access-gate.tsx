@@ -7,8 +7,8 @@ import { ErrorState, LoadingState } from "@/components/smaa/system";
 
 export function AccessGate({ children, onboarding = false }: { children: ReactNode; onboarding?: boolean }) {
   const path = useRouterState({ select: (state) => state.location.pathname });
+  const session = useQuery({ queryKey: ["session"], queryFn: authApi.me, retry: false, enabled: apiConfigured });
   if (!apiConfigured) return children;
-  const session = useQuery({ queryKey: ["session"], queryFn: authApi.me, retry: false });
   if (session.isLoading) return <LoadingState label="Loading workspace context" />;
   if (session.isError) {
     if (session.error instanceof ApiError && session.error.status === 401) return <Navigate to="/login" />;
